@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "merzifonindirim",
-    "slug": "merzifonindirim",
+    "slug": "merzifondiscountapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "40b52357-e74c-4fee-91d5-91822adc5ebd"
+      }
+    },
+    "owner": "emre10"
   }
 }

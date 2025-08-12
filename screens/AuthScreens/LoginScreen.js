@@ -9,17 +9,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Login from "../../services/LoginService/LoginActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { loginError } from "../../services/LoginService/LoginSlicer";
 import LoginRequest from "../../api/Services/AuthRequests/LoginRequest";
+import EnteranceApp from "../../store-data/Services/EntranceAppService/EntranceApp";
+import { setLoginState } from "../../store-data/Services/LoginService/LoginSlicer";
 
-const LoginScreen = () => {
-  const navigation = useNavigation();
+const LoginScreen = ({ navigation, setIsAuthenticated }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const loginState = useSelector((state) => state.LoginStateSlicer);
 
   const handleRegister = () => {
     navigation.navigate("Register");
@@ -28,22 +29,25 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     if (Email && Password) {
       try {
-        const result = await LoginRequest({ Email, Password });
+        const result = await LoginRequest(Email, Password);
 
-        if (result.success) {
-          await AsyncStorage.setItem("token", result.token);
-
-          navigation.navigate("DrawerNavigator");
+        if (result.access_token) {
+          console.log("Login başarılı", result);
+          await AsyncStorage.setItem("token", result.access_token);
+          console.log("Token kaydedildi", await AsyncStorage.getItem("token"));
+          await EnteranceApp(dispatch);
+          setIsAuthenticated(true);
+          dispatch(setLoginState({ error: null })); // Hata varsa temizle
         } else {
-          setError(result.message || "Giriş başarısız. Lütfen tekrar deneyin.");
+          dispatch(setLoginState({ error: "Giriş başarısız oldu." }));
         }
       } catch (error) {
-        dispatch(loginError("kullanıcı adı veya şifre yanlış"));
-        console.log(loginState.ErrorState);
-        setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+        const errorMsg =
+          error?.response?.data?.error_description || "Bir hata oluştu.";
+        dispatch(setLoginState({ error: errorMsg }));
       }
     } else {
-      setError("Lütfen tüm alanları doldurun.");
+      dispatch(setLoginState({ error: "Email ve şifre boş olamaz!" }));
     }
   };
 
@@ -63,22 +67,23 @@ const LoginScreen = () => {
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Kullanıcı Adı veya Email"
+            placeholder="Email"
+            placeholderTextColor={"gray"}
             value={Email}
             onChangeText={setEmail}
           />
           <TextInput
             style={styles.input}
             placeholder="Şifre"
+            placeholderTextColor={"gray"}
             secureTextEntry
             value={Password}
             onChangeText={setPassword}
           />
-          {loginState.ErrorState && (
-            <Text style={styles.error}>
-              Kullanıcı adı / Email veya şifre yanlış
-            </Text>
+          {loginState.error && (
+            <Text style={styles.error}>{loginState.error}</Text>
           )}
+
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

@@ -20,14 +20,18 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.emre10.merzifondiscountapp",
+      "config": {
+        "cleartextTraffic": true
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "40b52357-e74c-4fee-91d5-91822adc5ebd"
+        "projectId": "037c9f4f-32bc-490c-8cd0-aca425566646"
       }
     },
     "owner": "emre10"

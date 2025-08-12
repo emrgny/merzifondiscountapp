@@ -11,7 +11,10 @@ const ControlJwtToken = async () => {
 
   const decodedToken = jwtDecode(token);
   const currentTime = Date.now() / 1000;
+  await AsyncStorage.setItem("userId", decodedToken.sub); // Token'ı güncelle
 
+  console.log("decodedToken.exp:", decodedToken.exp);
+  console.log("currentTime:", currentTime);
   if (decodedToken.exp < currentTime) {
     console.log("Token süresi dolmuş, login sayfasına yönlendiriliyor...");
     await AsyncStorage.removeItem("token");

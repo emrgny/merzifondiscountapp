@@ -1,8 +1,12 @@
-import AuthApiClient from "../../Config/AuthApiClient";
+import AuthApiClient from "../../Config/AuthConfig.js";
 
 const RegisterRequest = async (userData) => {
-  const response = await AuthApiClient.post("/api/account/register", userData);
-
+  console.log("RegisterRequest çalıştı");
+  const response = await AuthApiClient.post(
+    "/api/ClientUser/Register",
+    userData
+  );
+  console.log("RegisterRequest çalıştı", userData);
   return response.data;
 };
 

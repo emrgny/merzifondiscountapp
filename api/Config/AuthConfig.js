@@ -1,8 +1,10 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export const AUTH_BASE_URL = "http://77.245.156.129:5000";
+
 const AuthApiClient = axios.create({
-  baseURL: "https://feb26521cf86.ngrok-free.app/api",
+  baseURL: AUTH_BASE_URL, // BURADA /api YOK !!!
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",

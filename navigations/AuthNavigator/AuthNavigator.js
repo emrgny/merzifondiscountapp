@@ -1,3 +1,4 @@
+import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../../screens/AuthScreens/LoginScreen";
 import RegisterScreen from "../../screens/AuthScreens/RegisterScreen";
 

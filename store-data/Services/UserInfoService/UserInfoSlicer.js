@@ -1,25 +1,13 @@
-import { createslice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  Id: null,
-  Name: "",
-  Surname: "",
-  Email: "",
-  PhoneNumber: "",
-  BirthDate: null,
-};
+const initialState = {};
 
-const userInfoSlice = createslice({
+const userInfoSlice = createSlice({
   name: "UserInfo",
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
-      state.Id = action.payload.Id;
-      state.Name = action.payload.Name;
-      state.Surname = action.payload.Surname;
-      state.PhoneNumber = action.payload.PhoneNumber;
-      state.Email = action.payload.Email;
-      state.BirthDate = action.payload.BirthDate;
+      return action.payload; // Tüm kupon listesini state olarak ata
     },
     clearUserInfo: () => initialState,
   },

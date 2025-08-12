@@ -8,8 +8,10 @@ const EnteranceApp = async (dispatch) => {
     if (!isConnected) return { success: false };
 
     const { isValid, decodedToken } = await ControlJwtToken();
-    if (!isValid) return { success: false };
-
+    if (!isValid) {
+      return { success: false };
+    }
+    console.log("nuraya gelindi");
     await EntranceApiRequests(dispatch, decodedToken.sub);
 
     return { success: true };

@@ -1,12 +1,10 @@
-import { View, Text } from "react-native";
-import React from "react";
+import AdvertisementApiClient from "../../Config/AdvertisementConfig";
 
-const GetAdvertisementRequest = () => {
-  return (
-    <View>
-      <Text>GetAdvertisementRequest</Text>
-    </View>
+const GetAdvertisementRequest = async () => {
+  const response = await AdvertisementApiClient.get(
+    `/api/advertisements/AdvertisementListForClientUser`
   );
+  return response.data;
 };
 
 export default GetAdvertisementRequest;
